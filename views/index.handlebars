@@ -1,0 +1,138 @@
+<div class="main-container">
+    <div id="big-banner" class="jumbotron jumbotron-fluid"
+        style="background-image: url('../assets/img/burgers.png'); background-size: 100%;">
+    </div>
+</div>
+{{!-- ========== Header Container ========== --}}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post-preview">
+                <h1>My Burger; My Way!</h1>
+                <br><br>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container" id="burger-order-subtitle">
+    <h2><strong>Order the Burger. Devour the Burger!</strong></h2>
+    <h4>Order From the Speciality Burgers or Choose Selection From Dropdown Menu Items</h4>
+</div>
+<br>
+<hr>
+<br>
+{{!-- ==== Burger Selection Section ==== --}}
+<div class="container" id="burgerform">
+    <panel>
+        <form class="create-form">
+            <div class="form-group">
+                <br>
+                <label for="newburger">Order Burgers From Menu</label>
+                {{!-- additional burger selection not in sql --}}
+                <select data-placeholder="" id="newburger" name="burger">
+                    <option value="Nothing Selected" selected>Please Select a Sandwich</option>
+                    <option value="Hamburger">Hamburger</option>
+                    <option value="CheezBurger">CheeseBurger</option>
+                    <option value="DoubleCheez">Double Cheese Burger</option>
+                    <option value="SteaknCheez">Philly Steak and Cheese</option>
+                    <option value="BBQPulledPork">BBQ Pulled Pork Sandwich</option>
+                    <option value="ChkenBaconAva">Chicken Bacon Avacado Sandwich</option>
+                    <option value="TurkeyBurger">Turkey Burger</option>
+                    <option value="VeggieBurger">Veggie Burger</option>
+                </select>
+
+                <button type="submit" class="btn" id="addburger">
+                    <span class="fa fa-search" style="font-size:18px"></span>
+                </button>
+            </div>
+        </form>
+    </panel>
+    <br>
+    <hr>
+
+    {{!-- ========== Burger Form ======== --}}
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panle-default">
+                <div class="panel-heading" id="leftside"><strong>Devour Your Choice of Burger</strong>
+                    <h5>Choose From Chef Specials Below</h5>
+                </div>
+                <br>
+                <div class="panel-body">
+                    <ul>
+                        {{#each burgers}}
+                        {{#unless devoured}}
+                        <span> {{this.id}} {{this.burger_name}} </span>
+                        <button type="button" class="eatburger btn btn-warning" id="eatbutton" data-id="{{this.id}}"
+                            data-newDevoured="{{devour}}"><span class="fa fa-usd"> Order!</span></button>
+                        <hr>
+                        {{/unless}}
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading" id="rightside"><strong>Burger is Ready for Pick Up</strong>
+                    <h5>Remove order from pick up when delivered</h5>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        {{#each burgers}}
+                        {{#if devoured}}
+                        <span> {{this.id}} - {{this.burger_name}} </span>
+                        <button type="button" class="trashburger btn btn-danger" id="trashbutton" data-id="{{this.id}}" style="font-size:18px">Devour!  <i class="fa fa-trash-o"></i></button>
+                        {{!-- <button type="button" class="trashburger btn btn-danger" id="trashbutton" data-id="{{this.id}}"
+                            data-newDevoured="{{devour}}"><i class="fa fa-trash-o" style="font-size:36px;color:rgb(156, 31, 31)"></i></button> --}}
+                        <hr>
+                        {{/if}}
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+    {{!-- ======== User Add Burger Section ======== --}}
+    <div class="row text-center add">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="input text-center">
+                <h4 class="heading headTitle" id="add">Can't Find What You're Looking For? Add A Burger Here!</h4>
+                
+                    <form class ="create-form" method="POST" action="api/burgers" class="addOne text-center">
+                        <div class="form-group">
+                        <input type="text" placeholder="What's Your Burger?" id="newburger" name="name">
+                        {{!-- <textarea id="textArea" type="text" name="burger_name" rows="2" cols="40"></textarea> --}}
+                        <button id="addburger" class="eatNewBurger" type="submit">Create Burger!</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<hr>
+
+{{!-- ========== FOOTER ========= --}}
+<footer id="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <ul class="list-inline text-right" id="footer-content">
+                    <li class="list-inline-item">
+                        <a href="https://dashboard.heroku.com/apps">
+                            <img src="/assets/img/heroku.png" width="8%">
+                            <a href="https://melaniebott2691.github.io/14-handlebars-Burger/">
+                                <img src="/assets/img/GitHub.png" width="6%">
+                            </a>
+                            <p class="copyright">Copyright &copy; Burger Barn 2020</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>

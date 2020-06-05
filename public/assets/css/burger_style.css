@@ -1,0 +1,93 @@
+#big-banner {
+    height: 80vh;
+    background-repeat: no-repeat;
+    background-color: rgb(218, 213, 204);
+} 
+body {
+    background-color: rgb(218, 213, 204);
+}
+
+h1 {
+    font-family: 'Chelsea Market', cursive;
+    position: center;
+    top: 30%;
+    text-align: center;
+    font-size: 60px;
+    color: rgb(155, 35, 35);
+}
+h2 {
+    font-size: 38px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: rgb(40, 18, 18);
+    text-align: center;
+}
+h4 {
+    font-family: 'Chelsea Market', cursive;
+}
+#btnCreate {
+    border-radius: 8px;
+    height: 40px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: rgb(155, 35, 35);
+    color: white;
+}
+.panel-heading {
+    font-size: 32px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.panel-body {
+    font-size: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bolder;
+}
+#burger-order-subtitle {
+    font-size: 32px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+#burger-order {
+    font-size: 22px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+label {
+    font-family: 'Chelsea Market', cursive;
+}
+#newburger {
+    border-radius: 8px;
+    height: 40px;
+    width: 300px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+#addburger {
+    border-radius: 8px;
+    height: 40px;
+    width: 130px;
+    background-color: rgb(155, 35, 35);
+    color: white;
+}
+#eatbutton {
+    width: 100px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    color: rgb(155, 35, 35);
+}
+#trashburger {
+    width: 100px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    /* font-size: 22px; */
+    color: rgb(255, 254, 254);
+}
+#newBurger {
+    border-radius: 8px;
+    height: 50px;
+    width: 200px;
+}
+#addBurger {
+    height: 40px;
+    width: 180px;
+    color: white;   
+    font-size: 14px;
+}
+#footer-content {
+    opacity: 75%;
+}

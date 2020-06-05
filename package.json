@@ -1,0 +1,33 @@
+{
+  "name": "14-handlebars-burger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MelanieBott2691/14-handlebars-Burger.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MelanieBott2691/14-handlebars-Burger/issues"
+  },
+  "homepage": "https://github.com/MelanieBott2691/14-handlebars-Burger#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-timeout": "^1.9.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.4",
+    "handlebars": "^4.7.6",
+    "method-override": "^3.0.0",
+    "morgan": "^1.10.0",
+    "msql": "^1.0.3",
+    "mysql": "^2.18.1",
+    "orm": "^5.0.5",
+    "path": "^0.12.7"
+  }
+}
