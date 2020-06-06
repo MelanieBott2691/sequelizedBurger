@@ -1,38 +1,24 @@
 var express = require("express");
-var bodyParser = require("body-parser");
-// var methodOverride = require("method-override");
+var db = require("./models");
 
-
-// var timeout = require("connect-timeout");
-// var fs = require("fs");
-// var morgan = require('morgan');
-// var path = require("path");
-
-// // set up port to deploy in Heroku
-// var PORT = process.env.PORT || 8080;
-
-// variable to run express
+// Set up the Express App
 var app = express();
+var PORT = process.env.PORT || 8080;
+
+// Set up the Express App to handle data parsing
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Server as static content for the app from the "public" directory
 app.use(express.static(process.cwd() + "/public"));
-app.use(bodyParser.urlencoded({ extended: false }));
 
-var exphbs = require("express-handlebars");
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
+// Routes
+// =================================================================== 
+require("./routes/api-routes.js")(app);
 
-// Import routes and give the server access to them
-var routes = require("./controllers/burgers_controller.js");
-
-app.use("/", routes);
-// app.use("/udpate", routes);
-// app.use("/create", routes);
-// app.use(haltOnTimedout);
-
-// Start the server so that it can begin listening to client requests
-var PORT = process.env.PORT || 8080;
-app.listen(PORT, function() {
-    console.log("Server listening on: " + PORT);
-});
-// modules.export = JAWSDB_URL=value
+// sync the models by running db.sequelize.sync() before starting express server
+db.sequelize.sync().then(function(){
+    app.listen(PORT, function(){
+        console.log("App listening on PORT " + PORT);
+    });
+})

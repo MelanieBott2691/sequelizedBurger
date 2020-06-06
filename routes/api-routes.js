@@ -1,12 +1,14 @@
+// api-routes set up
+
 var db = require("../models/");
 
 module.exports = function(app) {
-    app.get("/api/todos", function(req, res) {
+    app.get("/api/burgers", function(req, res) {
         db.burger.findAll({}).then(function(req, res) {
             res.json(results);
         })
     });
-    app.post("/api/todos", function(req, res) {
+    app.post("/api/burgers", function(req, res) {
         db.burger.create({
             text: req.body.text,
             complete: req.body.complete,
@@ -14,7 +16,7 @@ module.exports = function(app) {
             res.json(results);
         });
     });
-    app.delete("/api/todos/:id", function(req, res){
+    app.delete("/api/burgers/:id", function(req, res){
         var id = req.params.id;
         db.burger.destory({
             where: {
@@ -24,7 +26,7 @@ module.exports = function(app) {
             res.json(results);
         });
     });
-    app.put("/api/todos/", function(req, res){
+    app.put("/api/burgers/", function(req, res){
         db.burger.update(
             {
                 text: req.body.text,

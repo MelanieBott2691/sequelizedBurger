@@ -1,92 +1,104 @@
-// different js file within the assets directory all within the public that contains the ajax that calls onclick and submit events triggered to run the actions
+//  burger.js completed
 
-// function to make sure everything loads first
-$(function() {
+$(document).ready(function(){
+    var $newItemInput = $("input.new-item");
+    var $burgerContainer = $(".burger-container");
+    $(document).on("click", "button.delete", deleteBurger);
+    $(document).on("click", "button.complete", toggleComplete);
+    $(document).on("click", ".burger-item", editBurger);
+    $(document).on("keyup", ".burger-item", deleteBurger);
+    $(document).on("blue", ".burger-item", cancelEdit);
+    $(document).on("submit", "#burger-form", insertBurger);
 
-$(".create-form").on("submit", function(event) {
-    event.preventDefault();
+    var burgers = [];
+    getBurgers();
 
-    var newBurger = {
-        burger_name: $("#newburger").val().trim(),
-        devoured: 0
-    };
-    // console.log(newBurger)
-    
-    $.ajax("/api/burgers/", {
-        type: "POST",
-        data: newBurger
-    }).then(function() {
-        console.log("Added new burger");
-        location.reload();
-    });
-    });
-
-    $(".eatburger").on("click", function(event) {
+    function initializeRows() {
+        $burgerContainer.empty();
+        var rowsToAdd = [];
+        for (var i = 0; i < burgers.length; i++) {
+            rowsToAdd.push(createNewRow(burgers[i]));
+        }
+        $burgerContainer.prepend(rowsToAdd);
+    }
+    function getBurgers(){
+        $.get("/api/brugers", function(data){
+            burgers = data;
+            initializeRows();
+        });
+    }
+    function deleteBurger(event) {
+        event.stopPropagation();
+        var id = $(this).data("id");
+        $.ajax({
+            method: "DELETE",
+            url: "/api/burgers/" + id
+        }).then(getBurgers);
+    }
+    function editBurger(){
+        var currentBurger = $(this).data("burgers");
+        $(this).children().hide();
+        $(this).children("input.edit").val(currentBurger.text);
+        $(this).children("input.edit").show();
+        $(this).children("input.edit").focus();
+    }
+    function toggleComplete(event){
+        event.stopPropagation();
+        var burger = $(this).parent().data("burger");
+        burger.complete = !burger.complete;
+        updateBurger(burgers);
+    }
+    function finishEdit(event) {
+        var updatedBurger = $(this).data("burger");
+        if (event.which === 13) {
+            updatedBurger.text = $(this).children("input").val().trim();
+            updateBurger(updatedBurger);
+        }
+    }
+    function updateBurger(burger) {
+        $.ajax({
+            method: "PUT",
+            url: "/api/burgers",
+            data: burger
+        }).then(getBurgers);
+    }
+    function cancelEdit(){
+        var currentBurger = $(this).data("burger");
+        if(currentBurger) {
+            $(this).children().hide();
+            $(this).children("input.edit").val(currentBurger.text);
+            $(this).children("span").show();
+            $(this).children("button").show();
+        }
+    }
+    function createNewRow(burger) {
+        var $newInputRow = $(
+            [
+                "<li class='list-group-item burger-item'>",
+                "<span>",
+                todo.text,
+                "</span",
+                "<input type='text' class='edit' style='display: none;'>",
+                "<<button class='delete btn btn-danger'>x</button>>",
+                "<button class='complete btn btn-primary'>x</button>",
+                "</li>"
+            ].join("")
+        );
+        $newInputRow.find("button.delete").data("id", burger.id);
+        $newInputRow.find("input.edit").css("display", "none");
+        $newInputRow.data("burger", burger);
+        if (burger.complete) {
+            $newInputRow.find("span").css("text-decoration", "line-through");
+        }
+        return $newInputRow;
+    }
+    function insertBurger(event) {
         event.preventDefault();
-console.log("eat-burger")    
-
-    var id = $(this).data("id");
-        var devouredState = {
-            devoured: 1
+        var burger = {
+            text: $newItemInput.val().trim(),
+            complete: false
         };
-
-           // put request 
-    $.ajax("/api/burgers/" + id, {
-        type: "PUT",
-        data: devouredState 
-    }).then(function() {
-        console.log("Burger devoured");
-        location.reload();
-    });
+        $.post("/api/burgers", burger, getBurgers);
+        $newItemInput.val("");
+    }
 });
-
-    // send the POST request
-    
-// trash burger onclick even by creating a delete action
-$(".trashburger").on("click", function(event) {
-    event.preventDefault();
-
-    var id = $(this).data("id");
-
-    // send the delete request
-    $.ajax({
-        type: "DELETE",
-        url: "/api/burgers/" + id
-    }).then(location.reload());
-    
-});
-});
-// user input add new burger ======================
-// $(function() {
-
-//     $(".eatNewBurger").on("submit", function(event) {
-//         event.preventDefault();
-    
-//         var newBurger = {
-//             burger_name: $("#newburger").val().trim(),
-//             devoured: 0
-//         };
-//         // console.log(newBurger)
-        
-//         $.ajax("/api/burgers/", {
-//             type: "POST",
-//             data: newBurger
-//         }).then(function() {
-//             console.log("Added new burger");
-//             location.reload();
-//         });
-//         });
-
-// // trash new user burger onclick even by creating a delete action
-// $(".btnCreate").on("click", function(event) {
-//     event.preventDefault();
-
-//     var id = $(this).data("id");
-
-//     // send the delete request
-//     $.ajax({
-//         type: "DELETE",
-//         url: "/api/burgers/" + id
-//     }).then(location.reload());
-// });
-// });
