@@ -2,13 +2,16 @@ var express = require("express");
 var router = express.Router();
 var db = require("../models");
 router.get("/", function(req, res){
+    res.redirect("/burgers");
+});
+router.get("/burgers", function(req, res){
     db.Burger.findAll({
         order: [
             ["burger_name", "ASC"]
         ],
         include: [{
-            model: db.Cutomer,
-            attributes: ["cutomer_name"]
+            model: db.Customer,
+            attributes: ["customer_name"]
         }]
     }).then(function(allBurgers){
         var hbsObject = {
@@ -18,7 +21,7 @@ router.get("/", function(req, res){
     });
 });
 router.post("/burgers/create", function(req, res){
-    return.db.Burger.create({
+    return db.Burger.create({
         burger_name: req.body.burgerName
     }).then(function(){
         res.redirect("/burgers");
