@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MelanieBott2691/14-handlebars-Burger.git"
+    "url": "git+https://github.com/MelanieBott2691/sequelizedBurger.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MelanieBott2691/14-handlebars-Burger/issues"
+    "url": "https://github.com/MelanieBott2691/sequelizedBurger/issues"
   },
-  "homepage": "https://github.com/MelanieBott2691/14-handlebars-Burger#readme",
+  "homepage": "https://github.com/MelanieBott2691/sequelizedBurger#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "connect-timeout": "^1.9.0",
