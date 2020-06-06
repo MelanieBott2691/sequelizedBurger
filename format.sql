@@ -46,6 +46,13 @@ INSERT INTO `customers` VALUES (1,'Bryce','2017-01-28 02:57:41','2017-01-28 02:5
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+-- VALUES ('Hawaiian BBQ Burger', FALSE),
+-- ('Little Bacon Cheeseburger', FALSE),
+-- ('Scrum-Delicious Burger', FALSE),
+-- ('Chile Veggie Burger', FALSE),
+-- ('Black Bean Tofu Burger', FALSE);
+
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
