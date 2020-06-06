@@ -2,12 +2,12 @@ var db = require("../models/");
 
 module.exports = function(app) {
     app.get("/api/todos", function(req, res) {
-        db.todos.findAll({}).then(function(req, res) {
+        db.burger.findAll({}).then(function(req, res) {
             res.json(results);
         })
     });
     app.post("/api/todos", function(req, res) {
-        db.todos.create({
+        db.burger.create({
             text: req.body.text,
             complete: req.body.complete,
         }).then(function(results){
@@ -16,7 +16,7 @@ module.exports = function(app) {
     });
     app.delete("/api/todos/:id", function(req, res){
         var id = req.params.id;
-        db.todos.destory({
+        db.burger.destory({
             where: {
                 id: id,
             },
@@ -25,7 +25,7 @@ module.exports = function(app) {
         });
     });
     app.put("/api/todos/", function(req, res){
-        db.todos.update(
+        db.burger.update(
             {
                 text: req.body.text,
                 complete: req.body.complete,
