@@ -1,67 +1,117 @@
-var express = require("express");
-var router = express.Router();
-var db = require("../models");
-router.get("/", function(req, res){
-    res.redirect("/burgers");
-});
-router.get("/burgers", function(req, res){
+var db = require('../models');
+
+module.exports = function (app) {
+  //Get Route
+  app.get('/burgers', function (req, res) {
     db.Burger.findAll({
-        order: [
-            ["burger_name", "ASC"]
-        ],
-        include: [{
-            model: db.Customer,
-            attributes: ["customer_name"]
-        }]
-    }).then(function(allBurgers){
-        var hbsObject = {
-            burgers: allBurgers
-        };
-        res.render("index", hbsObject);
+      order: [['burger_name', 'ASC']],
+      include: [db.Customer]
+    }).then(function (result) {
+      var obj = {
+        burger: result
+      };
+      res.render('index', obj);
     });
-});
-router.post("/burgers/create", function(req, res){
-    return db.Burger.create({
-        burger_name: req.body.burgerName
-    }).then(function(){
-        res.redirect("/burgers");
+  });
+  // Post Route
+  app.post('/', function (req, res) {
+    db.Burger.create({
+      burger_name: req.body.burger
+    }).then(function (burger) {
+      res.redirect('/');
     });
-});
-router.put("/burgers/update/devour/:id", function(req, res){
-    return db.Customer.create({
-        customer_name: req.body.customer
-    }).then(function(newCustomer){
-    return db.Burger.update({
-        devoured: req.body.devoured,
-        CustomerId: newCustomer.id
-    }, {
-        where: {
-            id: req.params.id
-        },
-        include: [db.Customer]
+  });
+
+  // Update Route
+  app.put('/', function (req, res) {
+    db.Customer.create({
+      customer_name: req.body.customer_name,
+      BurgerId: req.body.id
     });
-    }).then(function(){
-        res.redirect("/burgers");
-    });
-});
-router.put("/burgers/update/return/:id", function(req, res){
-    return db.Burger.update({
+    db.Burger.update(
+      {
         devoured: req.body.devoured
-    },{
+      },
+      {
         where: {
-            id: req.params.id
+          id: req.body.id
         }
-    }).then(function(){
-        res.redirect("/burgers");
+      }
+    ).then(function (burger) {
+      res.redirect('/');
     });
-    });
-    router.delete("/burgers/delete/:id", function(req, res){
-        return db.Burger.destroy({
-            where: {
-                id: req.params.id
-            }
-        }).then(function(){
-            res.redirect("/burgers");
-        });
-    });
-   module.exports = router;
+  });
+};
+//       {
+//         model: db.Customer,
+//         attributes: ['customer_name']
+//       }
+//     ]
+//   }).then(function (allBurgers) {
+//     var hbsObject = {
+//       burgers: allBurgers
+//     };
+//     res.render('index', hbsObject);
+//   });
+// });
+// router.post('/burgers/create', function (req, res) {
+//   return db.Burger.create({
+//     burger_name: req.body.burgerName
+//   }).then(function () {
+//     res.redirect('/burgers');
+//   });
+// });
+// router.put('/burgers/update/devour/:id', function (req, res) {
+//   return db.Customer.create({
+//     customer_name: req.body.customer
+//   })
+//     .then(function (newCustomer) {
+//       return db.Burger.update(
+//         {
+//           devoured: req.body.devoured,
+//           CustomerId: newCustomer.id
+//         },
+//         {
+//           where: {
+//             id: req.params.id
+//           },
+//           include: [db.Customer]
+//         }
+//       );
+//     })
+//     .then(function () {
+//       res.redirect('/burgers');
+//     });
+// });
+// router.put('/burgers/update/return/:id', function (req, res) {
+//   return db.Burger.update(
+//     {
+//       devoured: req.body.devoured
+//     },
+//     {
+//       where: {
+//         id: req.params.id
+//       }
+//     }
+//   ).then(function () {
+//     res.redirect('/burgers');
+//   });
+// });
+// router.delete('/burgers/delete/:id', function (req, res) {
+//   return db.Burger.destroy({
+//     where: {
+//       id: req.params.id
+//     }
+//   }).then(function () {
+//     res.redirect('/burgers');
+//   });
+// });
+
+// }
+
+// var express = require("express");
+// var router = express.Router();
+
+// router.get("/", function(req, res){
+//     res.redirect("/burgers");
+// });

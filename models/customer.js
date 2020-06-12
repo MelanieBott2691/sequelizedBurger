@@ -1,17 +1,13 @@
-module.exports = function(sequelize, DataTypes){
-    var Customer = sequelize.define("Customer", {
-        customer_name: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-    },{
-        paranoid: true,
-        tableName: "customers",
-        classMethods: {
-            associate: function (models){
-                Customer.hasOne(models.Burger);
-            }
-        }
+module.exports = function (sequelize, DataTypes) {
+  var Customer = sequelize.define('Customer', {
+    customer_name: DataTypes.STRING
+  });
+  Customer.associate = function (models) {
+    Customer.belongsTo(models.Burger, {
+      foreignKey: {
+        allowNull: false
+      }
     });
-    return Customer;
+  };
+  return Customer;
 };

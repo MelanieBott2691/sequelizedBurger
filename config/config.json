@@ -2,15 +2,15 @@
   "development": {
     "username": "root",
     "password": "root",
-   
-    "host": "127.0.0.1",
+    "database": "burger_db",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": "root",
     
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "mysql",
     "use_env_variable": "JAWSDB_URL"
   },
@@ -18,7 +18,7 @@
     "username": "root",
     "password": "root",
    
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "mysql",
     "use_env_variable": "JAWSDB_URL"
   }

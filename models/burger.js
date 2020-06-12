@@ -1,23 +1,17 @@
-
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   var Burger = sequelize.define('Burger', {
-    burger_name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
+    burger_name: DataTypes.STRING,
     devoured: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false
-    }
-  }, {
-    paranoid: true,
-    tableName: "burgers",
-    classMethods: {
-      associate: function(models) {
-        Burger.belongsTo(models.Customer);
-      }
+      defaultValue: 0
     }
   });
-  return Burger;
+
+  Burger.associate = function (models) {
+    Burger.hasOne(models.Customer, {
+      onDelete: 'cascade'
+    });
   };
-  
+
+  return Burger;
+};
