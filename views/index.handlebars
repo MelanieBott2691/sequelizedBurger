@@ -63,10 +63,12 @@
                     <ul>
                         {{#each burgers}}
                         {{#unless devoured}}
+                        <form action="burger/eat/{{id}}" method="POST">
                         <span> {{this.id}} {{this.burger_name}} </span>
                         <button type="button" class="eatburger btn btn-warning" id="eatbutton" data-id="{{this.id}}"
                             data-newDevoured="{{devour}}"><span class="fa fa-usd"> Order!</span></button>
                         <hr>
+                        </form>
                         {{/unless}}
                         {{/each}}
                     </ul>
@@ -81,8 +83,9 @@
                 <div class="panel-body">
                     <ul>
                         {{#each burgers}}
-                        {{#if devoured}}
-                        <span> {{this.id}} - {{this.burger_name}} </span>
+                        {{#if this.devoured}}
+                        <span> {{this.id}}. {{this.burger_name}} </span>
+                        <div class="col-md-6 col-xs-6"><i>(Eaten by{{this.devourer.devourer_name}})</i></div>
                         <button type="button" class="trashburger btn btn-danger" id="trashbutton" data-id="{{this.id}}" style="font-size:18px">Devour!  <i class="fa fa-trash-o"></i></button>
                         {{!-- <button type="button" class="trashburger btn btn-danger" id="trashbutton" data-id="{{this.id}}"
                             data-newDevoured="{{devour}}"><i class="fa fa-trash-o" style="font-size:36px;color:rgb(156, 31, 31)"></i></button> --}}
@@ -103,7 +106,7 @@
             <div class="input text-center">
                 <h4 class="heading headTitle" id="add">Can't Find What You're Looking For? Add A Burger Here!</h4>
                 
-                    <form class ="create-form" method="POST" action="api/burgers" class="addOne text-center">
+                    <form action="burger/create" method="POST" class="text-center">
                         <div class="form-group">
                         <input type="text" placeholder="What's Your Burger?" id="newburger" name="burger_name" class="form-control text center" maxlength="50">
                         {{!-- <textarea id="textArea" type="text" name="burger_name" rows="2" cols="40"></textarea> --}}
@@ -116,7 +119,7 @@
 </div>
 </div>
 <hr>
-
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 {{!-- ========== FOOTER ========= --}}
 <footer id="footer-content">
     <div class="container">
