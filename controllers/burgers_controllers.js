@@ -1,117 +1,59 @@
-var db = require('../models');
+var models = require('../models');
+var express = require('express');
+var router = express.Router();
 
-module.exports = function (app) {
-  //Get Route
-  app.get('/burgers', function (req, res) {
-    db.Burger.findAll({
-      order: [['burger_name', 'ASC']],
-      include: [db.Customer]
-    }).then(function (result) {
-      var obj = {
-        burger: result
-      };
-      res.render('index', obj);
+var sequelizeConnection = models.sequelize;
+sequelizeConnection.sync();
+
+// Create Routes
+router.get('/', function (req, res) {
+  res.redirect('/index');
+});
+
+router.get('/index', function (req, res) {
+  models.burgers
+    .findAll({
+      include: [{ model: models.devoured }]
+    })
+    .then(function (data) {
+      var hbsObject = { burgers: data };
+      res.redirect('index', hbsObject);
     });
-  });
-  // Post Route
-  app.post('/', function (req, res) {
-    db.Burger.create({
-      burger_name: req.body.burger
-    }).then(function (burger) {
-      res.redirect('/');
+});
+// Create New Burger
+router.post('/burger/create', function (req, res) {
+  models.burgers
+    .create({
+      burger_name: req.body.burger_name,
+      devoured: false
+    })
+    .then(function () {
+      res.redirect('/index');
     });
-  });
+});
 
-  // Update Route
-  app.put('/', function (req, res) {
-    db.Customer.create({
-      customer_name: req.body.customer_name,
-      BurgerId: req.body.id
+// Devour Burger
+router.post('/burger/eat/:id', function (req, res) {
+  if (req.body.burgerEater === '' || req.body.burgerEater == null) {
+    req.body.burgerEater = 'Anonymous';
+  }
+  models.devoured
+    .create({
+      devoured_name: req.body.burgerEater,
+      burgerId: req.params.id
+    })
+    .then(function (newDevourer) {
+      models.burgers
+        .findOne({ where: { id: req.params.id } })
+        .then(function (eatenBurger) {
+          eatenBurger
+            .update({
+              devoured: true
+            })
+            .then(function () {
+              res.redirect('/index');
+            });
+        });
     });
-    db.Burger.update(
-      {
-        devoured: req.body.devoured
-      },
-      {
-        where: {
-          id: req.body.id
-        }
-      }
-    ).then(function (burger) {
-      res.redirect('/');
-    });
-  });
-};
-//       {
-//         model: db.Customer,
-//         attributes: ['customer_name']
-//       }
-//     ]
-//   }).then(function (allBurgers) {
-//     var hbsObject = {
-//       burgers: allBurgers
-//     };
-//     res.render('index', hbsObject);
-//   });
-// });
-// router.post('/burgers/create', function (req, res) {
-//   return db.Burger.create({
-//     burger_name: req.body.burgerName
-//   }).then(function () {
-//     res.redirect('/burgers');
-//   });
-// });
-// router.put('/burgers/update/devour/:id', function (req, res) {
-//   return db.Customer.create({
-//     customer_name: req.body.customer
-//   })
-//     .then(function (newCustomer) {
-//       return db.Burger.update(
-//         {
-//           devoured: req.body.devoured,
-//           CustomerId: newCustomer.id
-//         },
-//         {
-//           where: {
-//             id: req.params.id
-//           },
-//           include: [db.Customer]
-//         }
-//       );
-//     })
-//     .then(function () {
-//       res.redirect('/burgers');
-//     });
-// });
-// router.put('/burgers/update/return/:id', function (req, res) {
-//   return db.Burger.update(
-//     {
-//       devoured: req.body.devoured
-//     },
-//     {
-//       where: {
-//         id: req.params.id
-//       }
-//     }
-//   ).then(function () {
-//     res.redirect('/burgers');
-//   });
-// });
-// router.delete('/burgers/delete/:id', function (req, res) {
-//   return db.Burger.destroy({
-//     where: {
-//       id: req.params.id
-//     }
-//   }).then(function () {
-//     res.redirect('/burgers');
-//   });
-// });
-
-// }
-
-// var express = require("express");
-// var router = express.Router();
-
-// router.get("/", function(req, res){
-//     res.redirect("/burgers");
-// });
+});
+module.exports = router;
