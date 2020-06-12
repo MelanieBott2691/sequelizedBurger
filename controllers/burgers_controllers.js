@@ -7,7 +7,9 @@ sequelizeConnection.sync();
 
 // Create Routes
 router.get('/', function (req, res) {
-  res.redirect('/index');
+  res.redirect('index', {
+    burgers: data
+  });
 });
 
 router.get('/index', function (req, res) {
@@ -17,7 +19,7 @@ router.get('/index', function (req, res) {
     })
     .then(function (data) {
       var hbsObject = { burgers: data };
-      res.redirect('index', hbsObject);
+      res.redirect('/index', hbsObject);
     });
 });
 // Create New Burger
