@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var methodOverride = require('method-override');
+// var methodOverride = require('method-override');
 var exphbs = require('express-handlebars');
 
 // Set up the Express App
