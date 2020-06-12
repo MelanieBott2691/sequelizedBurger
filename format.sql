@@ -15,7 +15,7 @@
 --      `CustomerId` INT(11) DEFAULT NULL,
 --      PRIMARY KEY(`id`),
 --      KEY `CustomerId` (`CustomerId`),
---      CONSTRAINT `burgers_ibfk_1` FOREIGN KEY (`CustomerId`) REFERENCES `customers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+--      varRAINT `burgers_ibfk_1` FOREIGN KEY (`CustomerId`) REFERENCES `customers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 -- ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- --  Dumping data for table burgers
